@@ -28,20 +28,20 @@ public class CountryController {
         return temp;
     }
 
-    //    http://localhost:2019/countries/all
-    @GetMapping(value = "/all", produces = "application/json")
+    //    http://localhost:2019/countries/names/all
+    @GetMapping(value = "names/all", produces = "application/json")
     public ResponseEntity<?> listAllCountries(){
         List<Country> myList = new ArrayList<>();
         countryrepo.findAll().iterator().forEachRemaining(myList::add);
         return new ResponseEntity<>(myList, HttpStatus.OK);
     }
-    //    http://localhost:2019/countries/names/s
-    @GetMapping(value = "/names/{letter}", produces = "application/json")
+    //    http://localhost:2019/countries/names/start/all
+    @GetMapping(value = "/names/start/{letter}", produces = "application/json")
     public ResponseEntity<?> countryByLetter(@PathVariable char letter){
         List<Country> myList = new ArrayList<>();
         countryrepo.findAll().iterator().forEachRemaining(myList::add);
-        List<Country> toReturn = findCountry(myList, c -> c.getName().charAt(0) == letter);
-        return new ResponseEntity<>(toReturn, HttpStatus.OK);
+        List<Country> rtnList = findCountry(myList, c -> c.getName().charAt(0) == letter);
+       return new ResponseEntity<>(rtnList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/population/total", produces = "application/json")
